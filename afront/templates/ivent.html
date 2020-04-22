@@ -1,0 +1,33 @@
+{% extends 'main.html' %}
+{% block title %} Информация {% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated%}
+
+<table border="1"cellpadding="10px" style="margin: 20px">
+
+    <tr>
+        <td>ID</td>
+        <td>Имя</td>
+        <td>Фамилия</td>
+        <td>Возраст</td>
+        <td>Компания</td>
+        <td>Зарплата</td>
+    </tr>
+    <tr>
+        {% for human in all_employees%}
+        <td>{{human.id}}</td>
+        <td>{{human.name}}</td>
+        <td>{{human.surname}}</td>
+        <td>{{human.age}}</td>
+        <td>{{human.company}}</td>
+        <td>{{human.salary}}</td>
+          </tr>
+    {%endfor%}
+</table>
+{%else%}
+<a href="register">Регистрация</a>
+<a href="auth">Авторизация</a>
+{%endif%}
+{% endblock %}

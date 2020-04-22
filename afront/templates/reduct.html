@@ -1,0 +1,48 @@
+{% extends 'main.html' %}
+{% block title %} Управление {% endblock %}
+
+{% block content %}
+
+{% if user.is_authenticated and user.is_superuser%}
+
+<table class="table table-hover">
+ <thead class="thead-dark">
+    <tr>
+        <td>ID</td>
+        <td>Имя</td>
+        <td>Фамилия</td>
+        <td>Возраст</td>
+        <td>Пол</td>
+        <td>Телефон</td>
+        <td>Email</td>
+        <td>Рост</td>
+        <td>Вес</td>
+        <td>Управление</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        {% for human in all_users%}
+        <td>{{human.id}}</td>
+        <td>{{human.name}}</td>
+        <td>{{human.surname}}</td>
+        <td>{{human.age}}</td>
+        <td>{{human.gender}}</td>
+        <td>{{human.phone}}</td>
+        <td>{{human.email}}</td>
+        <td>{{human.height}}</td>
+        <td>{{human.weight}}</td>
+        <td ><form action="/reduct/" method="post"> {%csrf_token%} <button class="btn btn-danger" type="submit" name="delete" value="{{human.id}}">Удалить</button> </form>
+       <!-- <form style="margin-top:5px" action="/changeAccData/" method="get"> {%csrf_token%} <button type="submit" name="delete" value="{{human.id}}">Редактивировать</button> </form>
+-->
+        </td>
+    </tr>
+
+    {%endfor%}
+
+  </tbody>
+</table>
+{%else%}
+<h1> Вы не суперпользователь</h1>
+{%endif%}
+{% endblock %}

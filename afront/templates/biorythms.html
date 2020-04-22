@@ -1,0 +1,113 @@
+{% extends 'main.html' %}
+{% block title %} Биоритмы {% endblock %}
+
+{% block content %}
+<style>
+    h3{
+        margin-left:20px;
+
+    }
+
+</style>
+
+<script src="https://code.jquery.com/jquery-2.1.0.js"></script>
+
+<h1>{{user.username}}
+</h1>
+{%if er%}
+<h2>{{er}}<a href="http://localhost:8000/account">перейти</a></h2>
+{%else%}
+<form action="/biorythms/" method="post">
+    {%csrf_token%}
+
+   <div class="form-row" style="margin:10px">
+
+      <div class="col-md-2.5 mb-3">
+        <label for="id_birth_date" >Дата рождения</label>
+        <input type="text" class="form-control" name="birthday" maxlength="50"  id="id_birth_date" required value="{{birthday}}">
+      </div> <!--стилизировать даты под бутстрап -->
+      <div class="col-md-3 mb-3">
+        <label for="id_calculate_date">Дата расчета</label>
+          <!--добавить сегодняшнюю дату -->
+        <input type="text" class="form-control"  name="curentday" maxlength="50"  id="id_calculate_date"  required value="{{today}}">
+      </div>
+ <button class="btn btn-outline-secondary"  style="margin:32px" type="submit" name="count" >Расчитать</button>
+ <a href="http://localhost:8000/bioresult/" role="button"class="btn btn-outline-secondary ml-0"  style="margin:32px" type="submit" name="recomendation" >Получить рекомендацию </a>    </li>
+
+
+    </div>
+</form>
+{% if chek%}
+
+{% block content1 %}
+<div class="btn-group-vertical">
+ <button class="btn list-group-item list-group-item-danger ml-3  mb-1"  id="samlox1" name="phys"> Физический биоритм: {{phys}}%</button>
+
+ <button class="btn list-group-item list-group-item-primary ml-3  mb-1"  id="samlox2" name="mind"> Эмоциональный биоритм: {{mind}}%</button>
+ <button class="btn list-group-item list-group-item-success ml-3 mb-1" id="samlox3" name="intel"> Интелектуальный биоритм: {{intel}}%</button>
+    <small class="form-text text-muted mx-auto mb-3" >Можно клацнуть :3</small>
+
+</div>
+
+<div class="media mb-2 ml-2"  id="toChtoVivodit1">
+  <img height="120" class=" mr-3 mb-3 mt-3" src="https://cdn1.iconfinder.com/data/icons/fitness-human/66/36-512.png" alt="Generic placeholder image">
+  <div class="media-body">
+    <h5 class="mt-0">Физический биоритм</h5>
+    Характеризует объем внутренней энергии организма, а также такие показатели, как выносливость, активность, скорость реакции и другие. Также физический биоритм определяет способность к восстановлению организма, предприимчивость и амбициозность.  От него зависят показатели эффективности метаболизма. Определение благоприятных и неблагоприятных периодов даст возможность варировать степень интенсивности тренировок. Таким образом человек может избежать травм и максимально эффективно использовать свои внутренние ресурсы.
+  </div>
+</div>
+
+<div class="media mb-2 ml-2" id="toChtoVivodit2">
+  <img height="120" class=" mr-3 mb-3 mt-3" src="https://image.flaticon.com/icons/png/512/113/113981.png" alt="Generic placeholder image">
+  <div class="media-body">
+    <h5 class="mt-0">Эмоциональный биоритм</h5>
+   Этот биоритм определяет Ваше внутренне эмоциональное состояние. От течения его цикла напрямую зависит чувствительность человека, его восприятие, а также весь спектр чувств и эмоций, сопровождающих повседневную жизнь. Также душевный биоритм отвечает за творческие способности и интуитивное знание. Особенно важно учитывать эмоциональный цикл для женщин и всех людей, занятых в творческой деятельности или тех, чья работа связана с общением. Очень явно воздействие душевного биоритма на семейные и любовные отношения. Так как его цикл определяет склонность к сопереживанию, уязвимость и обидчивость, эти факторы могут оказать существенное влияние на общение двух близких людей.
+  </div>
+</div>
+
+
+<div class="media ml-2" id="toChtoVivodit3">
+  <img height="120" class=" mr-3 mb-3 mt-3" src="https://image.flaticon.com/icons/png/512/112/112731.png" alt="Generic placeholder image">
+  <div class="media-body">
+    <h5 class="mt-0">Интелектуальный биоритм</h5>
+      Этот биоритмический цикл характеризует умственные способности человека. От положения синусоиды интеллектуального биоритма зависит способность размышлять, делать логические выводы, сопоставлять факты, находить взаимосвязи. Кроме того, данный биоритм отвечает за предусмотрительность и осторожность, определяя рациональность действий человека. Особенно явно ощущают изменения цикла люди интеллектуальных профессий – учителя, писатели, журналисты, финансисты и т.д. Также есть данные, подтверждающие зависимость производительности труда от изменений цикла этого биоритма.
+     </div>
+</div>
+
+
+<script>
+let ShowTextClick = function(diveb,paragrVivod){
+
+ let Boxdiv = document.getElementById(diveb)
+ let boxDivId = Boxdiv.id;
+ let BoxPar = document.getElementById(paragrVivod);
+ let boxParId = BoxPar.id;
+
+ let displayFlag = false;
+ $("#"+boxParId).hide();
+
+ $("#"+boxDivId).click(function(event){
+ if(displayFlag===false){
+ $("#"+boxParId).show();
+ displayFlag = true;
+ }else{
+ $("#"+boxParId).hide();
+ displayFlag = false;
+ }
+ });
+
+
+}
+ShowTextClick("samlox1","toChtoVivodit1");
+ShowTextClick("samlox2","toChtoVivodit2");
+ShowTextClick("samlox3","toChtoVivodit3");
+
+ </script>
+
+{% endblock %}
+
+
+{%endif%}
+{%endif%}
+
+{% endblock %}

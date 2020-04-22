@@ -1,0 +1,31 @@
+{% extends 'main.html' %}
+{% block title %} Вход {% endblock %}
+
+{% block content %}
+<style>
+.login-block
+{
+background-color: #ffffff;
+padding:20px;
+
+/* text-align:center; */
+}
+
+</style>
+
+<div class="login-block">
+<form action="" method="post" >
+    {%csrf_token%}
+
+    {% for field in form %}
+    <label for="">{{field.label}}</label>
+    <div>{{field}}</div>
+    {% if field.errors%}
+    <p>{{field.errors}}</p>
+    {%endif%}
+    {%endfor%}
+<br><button type="submit" class="btn btn-secondary" >Войти</button>
+</form>
+</div>
+{% endblock %}
+

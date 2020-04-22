@@ -1,0 +1,64 @@
+{% extends 'main.html' %}
+{% block title %} Внесение данных {% endblock %}
+
+{% block content %}
+<form action="/account/" method="post">
+    {%csrf_token%}
+
+  <form >
+    <div class="form-row" style="margin:10px">
+      <div class="col-md-2 mb-3">
+        <label for="id_name">Имя</label>
+        <input type="text" class="form-control" placeholder="Введите имя" name="name" maxlength="50" required="" id="id_name">
+      </div>
+      <div class="col-md-3 mb-3">
+        <label for="id_surname">Фамилия</label>
+        <input type="text" class="form-control" placeholder="Введите Фамилию" name="surname" maxlength="50" required="" id="id_surname">
+      </div>
+      <div class="col-md-3 mb-3">
+       <label for="id_email">Email</label>
+       <input type="email" class="form-control" placeholder="Введите Email" name="email" maxlength="50" required="" id="id_email" value="{{user.email}}">
+       <small class="form-text text-muted" style="text-align: center">We'll never share your email with anyone else.</small>
+          </div>
+    </div>
+
+
+    <div class="form-row" style="margin:10px">
+
+      <div class="col-md-2 mb-3">
+        <label for="id_phone">Телефон</label>
+        <input type="text" class="form-control" placeholder="Введите телефон" name="phone" maxlength="50" required="" id="id_phone">
+      </div>
+
+      <div class="col-md-2 mb-3">
+        <label for="id_age">Возраст</label>
+        <input type="text" class="form-control" placeholder="Введите Возраст" name="age" maxlength="50" required="" id="id_age">
+      </div>
+
+      <div class="col-md-2 mb-3">
+       <label for="id_gender">Пол</label>
+            <select name="gender" class="form-control" required="" id="id_gender">
+              <option value="" selected="">Выберете пол</option>
+              <option value="мужской">мужской</option>
+              <option value="женский">женский</option>
+            </select>
+       </div>
+
+         <div class="col-md-1 mb-3">
+        <label for="id_height">Рост</label>
+        <input type="text" class="form-control" placeholder="Введите Рост" name="height" maxlength="50" required="" id="id_height">
+      </div>
+
+        <div class="col-md-1 mb-3">
+        <label for="id_weight">Вес</label>
+        <input type="text" class="form-control" placeholder="Введите Вес" name="weight" maxlength="50" required="" id="id_weight">
+        </div>
+    </div>
+
+
+    <button class="btn btn-outline-secondary"  style="margin:15px" type="submit" name="Submit" >Submit form</button>
+</form>
+
+
+
+{% endblock %}

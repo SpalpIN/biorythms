@@ -1,0 +1,26 @@
+{% extends 'main.html' %}
+{% block title %} Личный кабинет {% endblock %}
+
+{% block content %}
+<style>
+    h3{
+        margin-left:20px;
+
+    }
+</style>
+<h1>{{user.username}}
+  <div class="navbar-text ml-9" style="margin:0 250px;">
+            <a class="btn btn-info" href="http://localhost:8000/changeData" role="button">Внести данные</a>
+
+       <a class="btn btn-info" href="http://localhost:8000/changeAccData" role="button" >Редактивировать</a>
+  </div>
+</h1>
+  {% for human in our_user%}
+<h3>{{human.name}}      {{human.surname}}</h3>
+<h3>Возраст: {{human.age}} Пол: {{human.gender}}</h3>
+<h3>Телефон: {{human.phone}} </h3>
+<h3>Email: {{human.email}}</h3>
+<h3>  Рост: {{human.height}} Вес: {{human.weight}}</h3>
+    {%endfor%}
+
+{% endblock %}

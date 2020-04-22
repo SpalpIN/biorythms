@@ -1,0 +1,28 @@
+{% extends 'biorythms.html' %}
+{% block content1 %}
+
+<form action="/bioresult/" method="post">
+    {%csrf_token%}
+
+<div class="btn-group-vertical">
+ <button class="btn list-group-item list-group-item-danger ml-3  mb-1" type="submit" id="samlox1" name="phys" value="phy"> Физический биоритм: {{phys}}%</button>
+ <button class="btn list-group-item list-group-item-primary ml-3  mb-1"  type="submit" id="samlox2" name="mind" value="mi"> Эмоциональный биоритм: {{mind}}%</button>
+ <button class="btn list-group-item list-group-item-success ml-3 mb-1" type="submit" id="samlox3" name="intel" value="int"> Интелектуальный биоритм: {{intel}}%</button>
+
+<small class="form-text text-muted mx-auto mb-3" >Нужно клацнуть ;3</small>
+
+</div>
+</form>
+
+{%if mestitle%}
+<div class="media mb-2 ml-2"  id="toChtoVivodit1">
+  <img height="120" class=" mr-3 mb-3 mt-3" src="https://cdn1.iconfinder.com/data/icons/fitness-human/66/36-512.png" alt="Generic placeholder image">
+  <div class="media-body">
+    <h5 class="mt-0">{{mestitle}}</h5>
+      {{mes}}
+       <h6 class="mt-1">Рекомендация: {{advice}}<h6>
+
+   </div>
+</div>
+{%endif%}}
+{% endblock %}

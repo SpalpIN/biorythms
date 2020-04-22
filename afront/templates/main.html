@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+ {% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title%}Health Advicer{% endblock %}</title>
+    <style>
+
+        nav a {
+            margin-left: 0px;
+        }
+
+    ul li
+    {
+        margin:0 10px;
+    }
+
+    footer
+    {
+        position : fixed;
+        bottom: 5px;
+        color: lightgray;
+
+        width : 100%;
+    }
+        body{
+            margin-left: 10px;
+        }
+
+        h1{ margin-left: 10px;}
+
+        h2{ margin-left: 10px;}
+
+        h3{ margin-left: 10px;}
+
+        h4{ margin-left: 10px;}
+
+</style>
+
+    <!--  <a href="http://localhost:8000/"><img height="200"  src="https://www.publy.ru/wp-content/uploads/2018/10/post_5bd7fb4a3a8a0.jpg" alt=""></a>
+
+
+-->
+<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
+</head>
+<body>
+
+<header>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a href="/main" class="navbar-brand">
+        <img src = "https://cdn.icon-icons.com/icons2/1581/PNG/512/3668865-beauty-cosmetics-health-heart_108034.png" width ="50" hight="40" alt="logo">
+    </a>
+
+{% if user.is_authenticated%}
+    <div class="collapse navbar-collapse">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item"> <a class="btn btn-outline-info" href="http://localhost:8000/biorythms" role="button">Биоритмы</a>    </li>
+            <li class="nav-item"> <a class="btn btn-outline-danger" href="http://localhost:8000/ivents" role="button">События</a>  </li>
+        </ul>
+    </div>
+
+    {% if user.is_superuser%}
+        <div class="navbar-text ml-9"  style="margin-right: 15px;">
+            <a class="btn btn-outline-danger" href="http://localhost:8000/reduct" role="button">Управление</a>   </li>
+        </div>
+    {%endif%}
+    <div class="navbar-text ml-9" style="margin-right: 15px;">
+            <a class="btn btn-outline-warning" href="http://localhost:8000/account" role="button">Личный кабинет</a>    </li>
+    </div>
+    <div class="navbar-text ml-9">
+            <a class="btn btn-warning" href="http://localhost:8000/logout" role="button">Выйти({{user.username}}) </a>    </li>
+    </div>
+
+    {%else%}
+
+       <ul class="navbar-nav mr-auto">
+            <li class="nav-item"> <a class="btn btn-success" href="http://localhost:8000/auth" role="button">Войти</a>    </li>
+            <li class="nav-item"> <a class="btn btn-info" href="http://localhost:8000/register" role="button">Зарегестрироваться</a>  </li>
+
+        </ul>
+
+    {%endif%}
+</nav>
+</header>
+
+{% block content %}
+{% if user.is_authenticated%}
+<h1>Главная страница </h1>
+<h4>Добро пожаловать на сайт, {{user.username}} </h4>
+{%else%}
+<h1>Стартовая страница  </h1>
+<h4>Приветствую тебя на моем сайте:3 </h4>
+{%endif%}
+{% endblock %}
+
+<footer class="page-footer font-small  bg-dark  bottom:10px  "> Denys Moskalenko</footer>
+</body>
+</html>
