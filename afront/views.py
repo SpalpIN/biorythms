@@ -312,6 +312,11 @@ class AuthForm(FormView):
         login(self.request, self.user)
         return super(AuthForm, self).form_valid(form)
 
+    def form_invalid(self, form):
+        msg='Please enter a correct username and password. Note that both fields may be case-sensitive.'
+        return HttpResponse(form.errors.as_text())
+
+
 
 class LogoutForm(FormView):
     def get(self, request):
