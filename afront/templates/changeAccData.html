@@ -2,6 +2,10 @@
 {% block title %} Изменение данных {% endblock %}
 
 {% block content %}
+<style>
+
+        h4{ margin-left: 5px;}
+</style>
 <form action="/changeAccData/" method="post">
     {%csrf_token%}
     {% for human in model%}
@@ -54,8 +58,9 @@
         </div>
     </div>
 
-    <button class="btn btn-outline-secondary"  style="margin:15px" type="submit" name="Update" >Submit form</button>
+    <button class="btn btn-outline-secondary"  style="margin:15px" type="submit" name="Update" >Сохранить данные</button>
  {%endfor%}
 </form>
 
+<h4>{{er}}<a type="button" class="btn btn-link"  href="/account">назад</a></h4>
 {% endblock %}

@@ -10,9 +10,9 @@
 </style>
 <h1>{{user.username}}
   <div class="navbar-text ml-9" style="margin:0 250px;">
-            <a class="btn btn-info" href="http://localhost:8000/changeData" role="button">Внести данные</a>
+            <a class="btn btn-info" href="/changeData" role="button">Внести данные</a>
 
-       <a class="btn btn-info" href="http://localhost:8000/changeAccData" role="button" >Редактивировать</a>
+       <a class="btn btn-info" href="/changeAccData" role="button" >Редактивировать</a>
   </div>
 </h1>
   {% for human in our_user%}
@@ -22,5 +22,4 @@
 <h3>Email: {{human.email}}</h3>
 <h3>  Рост: {{human.height}} Вес: {{human.weight}}</h3>
     {%endfor%}
-
 {% endblock %}
