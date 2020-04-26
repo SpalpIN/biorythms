@@ -183,10 +183,9 @@ class Biorhythms(TemplateView):
                 b[0], b[2] = b[2], b[0]
                 if int(b[0]) < 100:
                     b[0] = str(int(b[0]) + 1900)
-                b1 = '-'.join(b)
             if int(b[1]) > 12:
                 b[1], b[2] = b[2], b[1]
-                b1 = '-'.join(b)
+            b1 = '-'.join(b)
         except ValueError:
             return HttpResponse('Введите коректные данные!')
 
