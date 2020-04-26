@@ -171,15 +171,28 @@ class Biorhythms(TemplateView):
     def post(self, request):
         a1, b1 = request.POST['curentday'], request.POST['birthday']
         a = a1.split('-')
+        if len(b1)<8 or len(b1)>10:
+            return HttpResponse('Введите коректные данные!')
+        if '.' or ',' or '/' or '_' in b1:
+            b1 = b1.replace(".", "-")
+            b1 = b1.replace(",", "-")
+            b1 = b1.replace("/", "-")
+            b1 = b1.replace("_", "-")
         b = b1.split('-')
         try:
-            person = Human.objects.get(email=request.user.email)
+            if int(b[0]) < 32:
+                b[0], b[2] = b[2], b[0]
+                if int(b[0]) < 100:
+                    b[0] = str(int(b[0]) + 1900)
+                b1 = '-'.join(b)
+        except ValueError:
+            return HttpResponse('Введите коректные данные!')
 
+        try:
+            person = Human.objects.get(email=request.user.email)
             peid = person.id
             mod = BiorythmsModel(birth_date=b1, person_id=peid, calculate_date=a1)
             mod.save()
-
-
         except ObjectDoesNotExist:
             er = 'Для расчета биоритмов необходимо внести персональные данные в личном кабинете, '
             ctx = {'er': er}
@@ -188,7 +201,13 @@ class Biorhythms(TemplateView):
             pass
         model = BiorythmsModel.objects.get(person=peid)
         aa = datetime.date(int(a[0]), int(a[1]), int(a[2]))
-        bb = datetime.date(int(b[0]), int(b[1]), int(b[2]))
+        bb=''
+        try:
+            bb = datetime.date(int(b[0]), int(b[1]), int(b[2]))
+        except ValueError:
+            return HttpResponse('Введите коректные данные!')
+        except IndexError:
+            return HttpResponse('Введите коректные данные!')
         dd = str(aa - bb)
         days = int(dd.split()[0])
         p = {'phys': 23,
@@ -234,7 +253,10 @@ class Ivent(TemplateView):
     def get(self, request):
         if request.user.is_authenticated:
             all_employees = Human.objects.all()
-            ctx = {'all_employees': all_employees}
+            # biorythms = BiorythmsModel.objects.all()
+            ctx = {'all_employees': all_employees,
+                   # 'biorythms' : biorythms
+                   }
             return render(request, self.template_name, ctx)
         else:
             return render(request, self.template_name, {})
@@ -313,9 +335,8 @@ class AuthForm(FormView):
         return super(AuthForm, self).form_valid(form)
 
     def form_invalid(self, form):
-        msg='Please enter a correct username and password. Note that both fields may be case-sensitive.'
+        msg = 'Please enter a correct username and password. Note that both fields may be case-sensitive.'
         return HttpResponse(form.errors.as_text())
-
 
 
 class LogoutForm(FormView):

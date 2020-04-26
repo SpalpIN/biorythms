@@ -16,6 +16,7 @@
         <td>Email</td>
         <td>Рост</td>
         <td>Вес</td>
+
     </tr>
   </thead>
   <tbody>
@@ -29,12 +30,12 @@
         <td>{{human.email}}</td>
         <td>{{human.height}}</td>
         <td>{{human.weight}}</td>
+        <td>{{human.phys}}</td>
          <!-- <form style="margin-top:5px" action="/changeAccData/" method="get"> {%csrf_token%} <button type="submit" name="delete" value="{{human.id}}">Редактивировать</button> </form>
 -->
         </td>
     </tr>
-
-    {%endfor%}
+  {%endfor%}
 
   </tbody>
 </table>
