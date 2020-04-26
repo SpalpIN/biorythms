@@ -171,7 +171,7 @@ class Biorhythms(TemplateView):
     def post(self, request):
         a1, b1 = request.POST['curentday'], request.POST['birthday']
         a = a1.split('-')
-        if len(b1) < 8 or len(b1) > 10:
+        if len(b1) < 6 or len(b1) > 10:
             return HttpResponse('Введите коректные данные!')
         delim = {'.', ',', '/', '_', '!', '#', '$', '%', '&', '*', ';', ':', '?', '|', '~'}
         for i in delim:
