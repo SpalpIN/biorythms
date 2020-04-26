@@ -173,7 +173,19 @@ class Biorhythms(TemplateView):
         a = a1.split('-')
         if len(b1) < 6 or len(b1) > 10:
             return HttpResponse('Введите коректные данные!')
-        delim = {'.', ',', '/', '_', '!', '#', '$', '%', '&', '*', ';', ':', '?', '|', '~'}
+        delim = {'.', ',', '/', '_', '!', '#', '$', '%', '&', '*', ';', ':', '?', '|', '~',' '}
+
+        try:
+            int(b1)
+            b2 = list(b1)
+            if len(b2) == 8:
+                b1='{}{}-{}{}-{}{}{}{}'.format(b2[0],b2[1],b2[2],b2[3],b2[4],b2[5],b2[6],b2[7])
+            elif len(b2) == 6:
+                b1 = '{}{}-{}{}-{}{}'.format(b2[0], b2[1], b2[2], b2[3], b2[4], b2[5])
+            else:
+                return HttpResponse('Введите коректные данные!')
+        except ValueError:
+            pass
         for i in delim:
             if i in b1:
                 b1 = b1.replace(i, "-")
@@ -188,6 +200,9 @@ class Biorhythms(TemplateView):
             b1 = '-'.join(b)
         except ValueError:
             return HttpResponse('Введите коректные данные!')
+        except IndexError:
+            return HttpResponse('Введите коректные данные!')
+
 
         try:
             person = Human.objects.get(email=request.user.email)
