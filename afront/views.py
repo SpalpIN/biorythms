@@ -171,19 +171,21 @@ class Biorhythms(TemplateView):
     def post(self, request):
         a1, b1 = request.POST['curentday'], request.POST['birthday']
         a = a1.split('-')
-        if len(b1)<8 or len(b1)>10:
+        if len(b1) < 8 or len(b1) > 10:
             return HttpResponse('Введите коректные данные!')
-        if '.' or ',' or '/' or '_' in b1:
-            b1 = b1.replace(".", "-")
-            b1 = b1.replace(",", "-")
-            b1 = b1.replace("/", "-")
-            b1 = b1.replace("_", "-")
+        delim = {'.', ',', '/', '_', '!', '#', '$', '%', '&', '*', ';', ':', '?', '|', '~'}
+        for i in delim:
+            if i in b1:
+                b1 = b1.replace(i, "-")
         b = b1.split('-')
         try:
             if int(b[0]) < 32:
                 b[0], b[2] = b[2], b[0]
                 if int(b[0]) < 100:
                     b[0] = str(int(b[0]) + 1900)
+                b1 = '-'.join(b)
+            if int(b[1]) > 12:
+                b[1], b[2] = b[2], b[1]
                 b1 = '-'.join(b)
         except ValueError:
             return HttpResponse('Введите коректные данные!')
@@ -201,7 +203,7 @@ class Biorhythms(TemplateView):
             pass
         model = BiorythmsModel.objects.get(person=peid)
         aa = datetime.date(int(a[0]), int(a[1]), int(a[2]))
-        bb=''
+        bb = ''
         try:
             bb = datetime.date(int(b[0]), int(b[1]), int(b[2]))
         except ValueError:
