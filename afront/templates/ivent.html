@@ -8,7 +8,6 @@
 <table class="table table-hover">
  <thead class="thead-dark">
     <tr>
-        <td>ID</td>
         <td>Имя</td>
         <td>Фамилия</td>
         <td>Возраст</td>
@@ -22,7 +21,6 @@
   <tbody>
     <tr>
         {% for human in all_employees%}
-        <td>{{human.id}}</td>
         <td>{{human.name}}</td>
         <td>{{human.surname}}</td>
         <td>{{human.age}}</td>
@@ -39,5 +37,8 @@
 
   </tbody>
 </table>
+<!--   {% for human in bio%}
+{{human.phys}}
+  {%endfor%}-->
 {%endif%}
 {% endblock %}

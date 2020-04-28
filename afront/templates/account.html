@@ -8,11 +8,15 @@
 
     }
 </style>
+
 <h1>{{user.username}}
   <div class="navbar-text ml-9" style="margin:0 250px;">
-            <a class="btn btn-info" href="/changeData" role="button">Внести данные</a>
-
+      {% if inbase%}
        <a class="btn btn-info" href="/changeAccData" role="button" >Редактивировать</a>
+
+      {%else%}
+ <a class="btn btn-info" href="/changeData" role="button">Внести данные</a>
+      {%endif%}
   </div>
 </h1>
   {% for human in our_user%}

@@ -43,7 +43,10 @@ class Bioresult(TemplateView):
         except ObjectDoesNotExist:
             model = ''
             birthday = ''
-        today = datetime.date.today().strftime("%Y-%m-%d")
+        try:
+            today = model.calculate_date
+        except ObjectDoesNotExist:
+            today = datetime.date.today().strftime("%Y-%m-%d")
         chek = True
         ctx = {
             'today': today,
@@ -67,7 +70,10 @@ class Bioresult(TemplateView):
         except ObjectDoesNotExist:
             model = ''
             birthday = ''
-        today = datetime.date.today().strftime("%Y-%m-%d")
+        try:
+            today = model.calculate_date
+        except ObjectDoesNotExist:
+            today = datetime.date.today().strftime("%Y-%m-%d")
         chek = True
         ctx = {
             'today': today,
@@ -173,13 +179,13 @@ class Biorhythms(TemplateView):
         a = a1.split('-')
         if len(b1) < 6 or len(b1) > 10:
             return HttpResponse('Введите коректные данные!')
-        delim = {'.', ',', '/', '_', '!', '#', '$', '%', '&', '*', ';', ':', '?', '|', '~',' '}
+        delim = {'.', ',', '/', '_', '!', '#', '$', '%', '&', '*', ';', ':', '?', '|', '~', ' '}
 
         try:
             int(b1)
             b2 = list(b1)
             if len(b2) == 8:
-                b1='{}{}-{}{}-{}{}{}{}'.format(b2[0],b2[1],b2[2],b2[3],b2[4],b2[5],b2[6],b2[7])
+                b1 = '{}{}-{}{}-{}{}{}{}'.format(b2[0], b2[1], b2[2], b2[3], b2[4], b2[5], b2[6], b2[7])
             elif len(b2) == 6:
                 b1 = '{}{}-{}{}-{}{}'.format(b2[0], b2[1], b2[2], b2[3], b2[4], b2[5])
             else:
@@ -203,7 +209,6 @@ class Biorhythms(TemplateView):
         except IndexError:
             return HttpResponse('Введите коректные данные!')
 
-
         try:
             person = Human.objects.get(email=request.user.email)
             peid = person.id
@@ -216,7 +221,11 @@ class Biorhythms(TemplateView):
         except IntegrityError:
             pass
         model = BiorythmsModel.objects.get(person=peid)
-        aa = datetime.date(int(a[0]), int(a[1]), int(a[2]))
+        aa = ''
+        try:
+            aa = datetime.date(int(a[0]), int(a[1]), int(a[2]))
+        except ValueError:
+            return HttpResponse('Введите коректные данные!')
         bb = ''
         try:
             bb = datetime.date(int(b[0]), int(b[1]), int(b[2]))
@@ -229,12 +238,13 @@ class Biorhythms(TemplateView):
         p = {'phys': 23,
              'mind': 28,
              'intel': 33}
-        bio = (sin((2 * pi * days) / p['phys']))
+        # bio = (sin((2 * pi * days) / p['phys']))
         chek = True
         model.phys = round((sin((2 * pi * days) / p['phys']) * 100), 2)
         model.mind = round((sin((2 * pi * days) / p['mind']) * 100), 2)
         model.intel = round((sin((2 * pi * days) / p['intel']) * 100), 2)
         model.birth_date = b1
+        model.calculate_date = a1
         model.save()
         ctx = {'phys': model.phys,
                'mind': model.mind,
@@ -269,9 +279,10 @@ class Ivent(TemplateView):
     def get(self, request):
         if request.user.is_authenticated:
             all_employees = Human.objects.all()
-            # biorythms = BiorythmsModel.objects.all()
+            # mod = BiorythmsModel.objects.all()
+            # bio = list(mod)
             ctx = {'all_employees': all_employees,
-                   # 'biorythms' : biorythms
+                   # 'bio':bio,
                    }
             return render(request, self.template_name, ctx)
         else:
@@ -291,14 +302,22 @@ class Account(TemplateView):
 
     def get(self, request):
         our_user = Human.objects.filter(email=request.user.email)
+        inbase = True
+        a = list(our_user)
+        try:
+            b = a[0]
+        except IndexError:
+            inbase = False
         ctx = {
             'our_user': our_user,
+            'inbase': inbase,
         }
         return render(request, self.template_name, ctx)
 
     def post(self, request):
         form = HumanForm(request.POST)
         if form.is_valid():
+            # chk = request.POST['hide_data']
             form.save()
             return redirect('account/')
         else:
