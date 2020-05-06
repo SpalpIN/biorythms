@@ -1,0 +1,49 @@
+{% extends 'main.html' %}
+{% block title %} Циркадный ритм {% endblock %}
+
+{% block content %}
+
+<h1>{{user.username}}
+
+ <div class="navbar-text ml-9" style="margin-left: 10%;">
+       <a class="btn btn-info" href="/hronoTest" role="button" >Пройти тест на определение хронотипа</a>
+
+  </div>
+</h1>
+{% block content2 %}
+
+ {% for human in our_user%}
+      {%if yar or sov or gol%}
+<h3> Ваш хронотип - {{human.hronoType}} </h3>
+  {%endif%}
+<div class="container" style="margin-right: 100%; ">
+
+
+<div class="media mb-2 "  id="toChtoVivodit1">
+
+      {%if yar%}
+  <img height="120" class=" mr-3 mb-3 mt-3" src="https://image.flaticon.com/icons/png/512/68/68459.png" alt="Generic placeholder image">
+  {%endif%}
+      {%if sov%}
+  <img height="120" class=" mr-3 mb-3 mt-3" src="https://image.flaticon.com/icons/png/512/96/96383.png" alt="Generic placeholder image">
+  {%endif%}
+      {%if gol%}
+  <img height="120" class=" mr-3 mb-3 mt-3" src="https://image.flaticon.com/icons/png/512/91/91819.png" alt="Generic placeholder image">
+  {%endif%}
+
+
+    <div class="media-body">
+        <h6>{{artic}}</h6>
+   </div>
+</div>
+
+
+</div>
+
+    {%endfor%}
+{% endblock %}
+
+
+
+{% endblock %}
+

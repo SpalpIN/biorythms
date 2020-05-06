@@ -2,6 +2,7 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from django.http import HttpResponse, HttpResponseRedirect
+from django.utils.datastructures import MultiValueDictKeyError
 from django.views.generic import TemplateView, FormView, UpdateView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import logout, login
@@ -287,6 +288,66 @@ class Ivent(TemplateView):
             return render(request, self.template_name, ctx)
         else:
             return render(request, self.template_name, {})
+
+
+class CircadeRythm(TemplateView):
+    template_name = 'circade.html'
+
+    def get(self, request):
+        if request.user.is_authenticated:
+            our_user = Human.objects.filter(email=request.user.email)
+            try:
+                model = Human.objects.get(email=request.user.email)
+            except ObjectDoesNotExist:
+                er = 'Для расчета хронотипа необходимо внести персональные данные в личном кабинете, '
+                ctx = {'er': er}
+                return render(request, 'biorythms.html', ctx)
+            yar, sov, gol = False, False, False
+            if 'Сова' in model.hronoType:
+                sov = True
+                artic = 'Вы - «сова». Ваши биологические часы идут медленнее, чем астрономические. Соответственно, Вам трудно заснуть вечером и трудно проснуться утром. «Совы» — люди, у которых наблюдается отставание фазы сна. Установлено, что лица вечернего типа легче приспосабливаются к работе в ночную смену и трехсменному труду. Совы лучше контролируют ритм сон-бодрствование по сравнению с другими людьми. Они предпочитают ложиться спать позже 23—24 часов, но зато им тяжелее вставать в ранние утренние часы. Они с удовольствием работают по ночам и выбирают такие профессии, чтобы не вставать слишком рано, а еще лучше — самим планировать свой рабочий график.'
+            elif 'Жаворонок' in model.hronoType:
+                yar = True
+                artic = 'Вы - «жаворонок». Ваши биологические часы идут быстрее, чем астрономические. Соответственно, Вы раньше ложитесь спать и раньше встаете. «Жаворонки» — люди, у которых циркадный ритм сдвигается вперед, то есть имеющие синдром опережающей фазы сна. У них период колебания околосуточных ритмов меньше 24 часов. Люди «жаворонки» спят столько же времени, сколько остальные, но их ритм отхода ко сну сдвинут на более ранний вечер. Они рано хотят спать, быстро засыпают и очень рано встают в одни и те же утренние часы. Лучше всего им работается утром на «свежую голову», а к концу дня их работоспособность снижается. Вечерние и третьи смены не для «жаворонков», они с трудом переносят ночные дежурства, клубы и дискотеки.'
+            elif 'Голубь' in model.hronoType:
+                gol = True
+                artic = 'Вы - «голубь». Ваши биологические часы идут приблизительно так же, как и астрономические. Это наиболее благоприятный тип суточного ритма, при котором не возникает проблем как с отходом косну, так и с подъемом. «Голуби» — люди дневного типа. Их циркадный ритм наиболее приспособлен к обычной смене дня и ночи. Период их наилучшей умственной и физической активности отмечается с 10 до 18 часов. Они лучше адаптированы к смене света и темноты. Но даже у них при переездах на большие расстояния со сменой часовых поясов и ночной работе наблюдается сбой собственных биологических часов. Например, при 3-часовой разнице во времени у них возникает бессонница ночью, сонливость и усталость днем, снижение работоспособности.'
+            else:
+                artic = ''
+
+            ctx = {'our_user': our_user, 'artic': artic,
+                   'yar': yar, 'sov': sov, 'gol': gol}
+            return render(request, self.template_name, ctx)
+        else:
+            return render(request, 'main.html', {})
+
+
+class HronoTest(TemplateView):
+    template_name = 'hronoTest.html'
+
+    def get(self, request):
+        return render(request, self.template_name, {})
+
+    def post(self, request):
+        res = 0
+        try:
+            for i in range(1, 24):
+                res += int(request.POST[str(i)])
+        except MultiValueDictKeyError:
+            return HttpResponse('Необходимо ответить на все вопросы')
+        our_user = Human.objects.get(email=request.user.email)
+        if res < 41:
+            our_user.hronoType = 'Четко выраженая Сова'
+        elif 42 <= res <= 57:
+            our_user.hronoType = 'Слабо выраженая Сова'
+        elif 58 <= res <= 76:
+            our_user.hronoType = 'Голубь'
+        elif 77 <= res <= 91:
+            our_user.hronoType = 'Слабо выраженый Жаворонок'
+        else:
+            our_user.hronoType = 'Четко выраженый Жаворонок'
+        our_user.save(update_fields=['hronoType'])
+        return redirect('circad/')
 
 
 def account_form(request):

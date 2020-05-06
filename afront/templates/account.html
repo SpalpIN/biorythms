@@ -25,5 +25,8 @@
 <h3>Телефон: {{human.phone}} </h3>
 <h3>Email: {{human.email}}</h3>
 <h3>  Рост: {{human.height}} Вес: {{human.weight}}</h3>
+{%if human.hronoType%}
+<h3>  Хронотип: {{human.hronoType}}</h3>
+{%endif%}
     {%endfor%}
 {% endblock %}

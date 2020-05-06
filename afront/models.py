@@ -20,6 +20,7 @@ class Human(models.Model):
 
     def __str__(self):
         return '{} {}'.format(self.name, self.surname)
+    hronoType = models.CharField(max_length=30, default='Неопределен')
 
 
 class BiorythmsModel(models.Model):

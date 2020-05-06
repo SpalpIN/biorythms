@@ -1,0 +1,235 @@
+{% extends 'circade.html' %}
+
+
+{% block content2 %}
+
+ <form action="/hronoTest/" method="post">
+     {%csrf_token%}
+<div class="container" style="margin-right: 100%; ">
+
+     <h6>1) Когда бы Вы предпочли вставать, если бы были совершенно свободны в выборе своего распорядка дня и руководствовались при этом исключительно личными желаниями?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name='1' value="5"> 5.00-6.45<br>
+        <input type="radio" name="1" value="4"> 6.46-8.15<br>
+        <input type="radio" name="1" value="3"> 8.16-10.45<br>
+        <input type="radio" name="1" value="2"> 10.46-12.00<br>
+        <input type="radio" name="1" value="1"> 12.01-13.00<br>
+    </div>
+<br>
+     <h6>2) Когда бы Вы предпочли ложиться спать, если бы планировали свое вечернее время совершенно свободно и руководствовались бы при этом исключительно личными желаниями?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name='2' value="5"> 20.00-20.45<br>
+        <input type="radio" name="2" value="4"> 20.46-21.30<br>
+        <input type="radio" name="2" value="3"> 21.31-00.15<br>
+        <input type="radio" name="2" value="2"> 00.16-01.30<br>
+        <input type="radio" name="2" value="1"> 01.31-03.00<br>
+    </div>
+<br>
+     <h6>3) Как велика Ваша потребность в будильнике, если утром Вам необходимо встать в точно определенное время?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="3" value="4"> Совершенно нет потребности  <br>
+        <input type="radio" name="3" value="3"> В отдельных случаях<br>
+        <input type="radio" name="3" value="2"> Потребность в будильнике довольно сильная<br>
+        <input type="radio" name="3" value="1"> Будильник мне абсолютно необходим<br>
+    </div>
+<br>
+     <h6>4) Если бы Вам пришлось готовиться к сдаче экзаменов в условиях жесткого лимита времени и использовать для занятий ночь (23.00-02.00 час.), насколько продуктивной была бы Ваша работа в это время?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="4" value="4"> Абсолютно бесполезной, совершенно не мог бы работать<br>
+        <input type="radio" name="4" value="3"> Была бы некоторая польза<br>
+        <input type="radio" name="4" value="2"> Работа была бы достаточно эффективной<br>
+        <input type="radio" name="4" value="1"> Работа была бы высокоэффективной<br>
+    </div>
+<br>
+     <h6>5) Легко ли Вам вставать утром в обычных условиях?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="5" value="1"> Очень трудно<br>
+        <input type="radio" name="5" value="2"> Довольно трудно<br>
+        <input type="radio" name="5" value="3"> Довольно легко<br>
+        <input type="radio" name="5" value="4"> Очень легко<br>
+    </div>
+<br>
+     <h6>6) Чувствуете ли Вы себя полностью проснувшимся в первые полчаса после подъема?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="6" value="1">  Очень большая сонливость<br>
+        <input type="radio" name="6" value="2">  Есть небольшая сонливость<br>
+        <input type="radio" name="6" value="3"> Довольно ясная голова <br>
+        <input type="radio" name="6" value="4"> Полная ясность мысли <br>
+    </div>
+<br>
+     <h6>7) Каков Ваш аппетит в первые полчаса после подъема?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="7" value="1">  Аппетита совершенно нет<br>
+        <input type="radio" name="7" value="2">  Аппетит снижен<br>
+        <input type="radio" name="7" value="3"> Довольно хороший аппетит<br>
+        <input type="radio" name="7" value="4">  Прекрасный аппетит<br>
+    </div>
+<br>
+     <h6>8) Если бы Вам пришлось готовиться к экзаменам в условиях жесткого лимита времени и использовать для подготовки раннее утро (4-7 час.), насколько продуктивной была бы Ваша работа в это время?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="8" value="1"> Абсолютно бесполезной, совершенно не мог бы работать <br>
+        <input type="radio" name="8" value="2">  Была бы некоторая польза <br>
+        <input type="radio" name="8" value="3"> Работа была бы достаточно эффективной <br>
+        <input type="radio" name="8" value="4"> Работа была бы высокоэффективной <br>
+    </div>
+<br>
+     <h6>9) Чувствуете ли Вы физическую усталость в первые полчаса после подъема?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="9" value="1"> Очень большая вялость (вплоть до полной разбитости) <br>
+        <input type="radio" name="9" value="2"> Небольшая вялость <br>
+        <input type="radio" name="9" value="3">  Незначительная бодрость<br>
+        <input type="radio" name="9" value="4"> Полная бодрость <br>
+    </div>
+<br>
+     <h6>10) Если Ваш следующий день свободен от работы, когда Вы ляжете спать?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="10" value="4">  Не позже, чем обычно <br>
+        <input type="radio" name="10" value="3"> Позже на 1 час и менее <br>
+        <input type="radio" name="10" value="2"> На 1-2 часа позже <br>
+    </div>
+<br>
+     <h6>11) Легко ли Вы засыпаете в обычных условиях?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="11" value="1">  Очень трудно<br>
+        <input type="radio" name="11" value="2"> Довольно трудно <br>
+        <input type="radio" name="11" value="3">  Довольно легко<br>
+        <input type="radio" name="11" value="4"> Очень легко <br>
+    </div>
+<br>
+     <h6>12) Вы решили укрепить свое здоровье с помощью физической культуры. Ваш друг предложил заниматься вместе по 1-му часу два раза в неделю. Для Вашего друга лучше всего это делать от 7-ми до 8-ми часов утра. Является ли этот период наилучшим и для Вас?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="12" value="4"> В это время я бы находился в хорошей форме <br>
+        <input type="radio" name="12" value="3"> Я был бы в довольно хорошем состоянии <br>
+        <input type="radio" name="12" value="2"> Мне было бы трудно <br>
+        <input type="radio" name="12" value="1">  Мне было бы очень трудно <br>
+    </div>
+<br>
+     <h6>13) Когда Вы вечером чувствуете себя настолько усталым, что должны лечь спать?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="13" value="5"> 20.00-21.00 <br>
+        <input type="radio" name="13" value="4"> 21.01-22.15  <br>
+        <input type="radio" name="13" value="3"> 22.16-00.45 <br>
+        <input type="radio" name="13" value="2"> 00.46-2.00 <br>
+        <input type="radio" name="13" value="1"> 2.01-3.00 <br>
+    </div>
+<br>
+     <h6>14) При выполнении двухчасовой работы, требующей от Вас полной мобилизации умственных сил, какой из 4-х предполагаемых периодов Вы бы выбрали для этой работы, если бы были совершенно свободны в выборе своего распорядка дня и руководствовались при этом исключительно личными желаниями?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="14" value="6"> 8.00-10.00 <br>
+        <input type="radio" name="14" value="4"> 11.00-13.00 <br>
+        <input type="radio" name="14" value="2"> 15.00-17.00 <br>
+        <input type="radio" name="14" value="0"> 19.00-21.00 <br>
+    </div>
+<br>
+     <h6>15) Как велика Ваша усталость к 23-м часам?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="15" value="5"> Очень устаю <br>
+        <input type="radio" name="15" value="3">  Заметно устаю<br>
+        <input type="radio" name="15" value="2">  Слегка устаю<br>
+        <input type="radio" name="15" value="0"> Совершенно не устаю <br>
+    </div>
+<br>
+     <h6>16) По какой-то причине Вам пришлось лечь спать на несколько часов позже, чем обычно. На следующее утро нет необходимости вставать в определенное время. Какой из четырех предлагаемых вариантов Вам больше всего подходит?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="16" value="4"> Проснусь в обычное время и больше не усну <br>
+        <input type="radio" name="16" value="3"> Проснусь в обычное время и буду дремать <br>
+        <input type="radio" name="16" value="2"> Проснусь в обычное время и снова засну <br>
+        <input type="radio" name="16" value="1"> Проснусь позже, чем обычно <br>
+    </div>
+<br>
+     <h6>17) Вы должны дежурить ночью с 4-х до 6-ти часов. Следующий день у Вас свободен. Какой из четырех предлагаемых вариантов для Вас наиболее приемлем?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="17" value="1"> Спать буду только после ночного дежурства <br>
+        <input type="radio" name="17" value="2">  Перед дежурством вздремну, а после дежурства лягу спать <br>
+        <input type="radio" name="17" value="3">  Перед дежурством хорошо высплюсь, а после дежурства еще подремлю<br>
+        <input type="radio" name="17" value="4">  Полностью высплюсь перед дежурством<br>
+    </div>
+<br>
+     <h6>18) Вы должны в течение 2-х часов выполнять тяжелую физическую работу. Какое время Вы выберете для этого, если будете полностью свободны в планировании своего распорядка дня и сможете руководствоваться исключительно личными желаниями?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="18" value="4"> 8.00-10.00 <br>
+        <input type="radio" name="18" value="3"> 11.00-13.00 <br>
+        <input type="radio" name="18" value="2"> 15.00-17.00 <br>
+        <input type="radio" name="18" value="1"> 19.00-21.00 <br>
+    </div>
+<br>
+     <h6>19) Вы решили всерьез заняться спортом. Ваш друг предлагает тренироваться вместе два раза в неделю по 1-му часу, лучшее время для него 22-23 час. Насколько благоприятным,судя по самочувствию, было бы это время для Вас?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="19" value="1"> Да, я был бы в хорошей форме <br>
+        <input type="radio" name="19" value="2"> Пожалуй, я был бы в приемлемой форме <br>
+        <input type="radio" name="19" value="3">  Немного поздновато, я был бы в плохой форме <br>
+        <input type="radio" name="19" value="4"> Нет, в это время я совсем не мог бы тренироваться <br>
+    </div>
+<br>
+     <h6>20) В котором часу Вы предпочитали вставать в детстве во время летних каникул, когда час подъема выбирался исключительно по Вашему личному желанию?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="20" value="5"> 5.00-6.45 <br>
+        <input type="radio" name="20" value="4"> 6.46-7.45 <br>
+        <input type="radio" name="20" value="3"> 7.46-9.45 <br>
+        <input type="radio" name="20" value="2">  9.46-10.45 <br>
+        <input type="radio" name="20" value="1"> 10.46-12.00 <br>
+    </div>
+<br>
+     <h6>21) Представьте себе, что Вы можете свободно выбирать свое рабочее время. Предположим, Вы имеете 5-часовой рабочий день (включая перерывы), и Ваша работа интересна и удовлетворяет Вас. Выберите вариант, когда эффективность Вашей работы была бы наивысшей.
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="21" value="1"> 00.01-5.00 <br>
+        <input type="radio" name="21" value="5"> 5.01-8.00 <br>
+        <input type="radio" name="21" value="4"> 8.01-10.00 <br>
+        <input type="radio" name="21" value="3">  10.01-16.00<br>
+        <input type="radio" name="21" value="2">  16.01-21.00<br>
+        <input type="radio" name="21" value="1"> 21.01-24.00 <br>
+    </div>
+<br>
+     <h6>22) В какое время суток Вы полностью достигаете «вершины» своей трудовой деятельности?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="22" value="1"> 00.01-4.00 <br>
+        <input type="radio" name="22" value="5"> 4.01-8.00 <br>
+        <input type="radio" name="22" value="4"> 8.01-9.00 <br>
+        <input type="radio" name="22" value="3"> 9.01-14.00 <br>
+        <input type="radio" name="22" value="2"> 14.01-17.00 <br>
+        <input type="radio" name="22" value="1"> 17.01-24.00 <br>
+    </div>
+<br>
+     <h6>23) Иногда приходится слышать о людях утреннего и вечернего типа. К какому из этих типов Вы относите себя?
+     </h6>
+    <div class="form-check">
+        <input type="radio" name="23" value="6"> Четко к утреннему<br>
+        <input type="radio" name="23" value="4"> Скорее к утреннему, чем к вечернему  <br>
+        <input type="radio" name="23" value="2">  Скорее к вечернему, чем к утреннему <br>
+        <input type="radio" name="23" value="0"> Четко к вечернему <br>
+    </div>
+    <br>
+     <button class = 'btn btn-secondary mb-5' type="submit">Закончить тест</button>
+
+</div>
+ </form>
+
+
+
+
+
+
+{% endblock %}
+

@@ -15,7 +15,10 @@ urlpatterns = [
     re_path('changeAccData/',views.ChangeAccData.as_view()),
     re_path('reduct/',views.Reduct.as_view()),
     re_path('bioresult/', views.Bioresult.as_view()),
-   # path('bioresult/p',views.physics)
+    re_path('circad/', views.CircadeRythm.as_view()),
+    re_path('hronoTest/', views.HronoTest.as_view()),
+
+
 
 
 
