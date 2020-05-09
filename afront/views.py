@@ -358,6 +358,74 @@ def account_form(request):
     return render(request, 'changePersonalData.html', ctx)
 
 
+def imt(our_us):
+    try:
+        person = Human.objects.get(email=our_us)
+    except ObjectDoesNotExist:
+        return False
+    return round(person.weight / ((person.height / 100) * (person.height / 100)), 1)
+
+
+def imtMSG(our_us, masindex):
+    status = ''
+    color = ''
+    try:
+        person = Human.objects.get(email=our_us)
+    except ObjectDoesNotExist:
+        return ['', '']
+    if person.age < 26:
+        if masindex < 17.5:
+            status = ' - Недостаточен, опасно для здоровья'
+            color = '#e23b42'
+        elif 17.5 <= masindex <= 19.4:
+            status = ' - Слегка снижен, неопасно для здоровья'
+            color = '#00e211'
+        elif 19.5 <= masindex <= 22.9:
+            status = ' - Нормальный'
+            color = '#007bff'
+        elif 23 <= masindex <= 27.4:
+            status = ' - Излишний'
+            color = '#e8b300'
+        elif 27.5 <= masindex <= 29.9:
+            status = ' - Ожирение 1 степени'
+            color = '#e87e0c'
+        elif 30 <= masindex <= 34.9:
+            status = ' - Ожирение 2 степени'
+            color = '#e8490e'
+        elif 35 <= masindex <= 39.9:
+            status = ' - Ожирение 3 степени'
+            color = '#e80b0d'
+        elif 40 <= masindex:
+            status = ' - Ожирение 4 степени'
+            color = '#c00000'
+    else:
+        if masindex < 18:
+            status = ' - Недостаточен, опасно для здоровья'
+            color = '#e23b42'
+        elif 18 <= masindex <= 19.9:
+            status = ' - Слегка снижен, неопасно для здоровья'
+            color = '#00e211'
+        elif 20 <= masindex <= 25.9:
+            status = ' - Нормальный'
+            color = '#007bff'
+        elif 26 <= masindex <= 27.9:
+            status = ' - Излишний'
+            color = '#e8b300'
+        elif 28 <= masindex <= 30.9:
+            status = ' - Ожирение 1 степени'
+            color = '#e87e0c'
+        elif 31 <= masindex <= 35.9:
+            status = ' - Ожирение 2 степени'
+            color = '#e8490e'
+        elif 36 <= masindex <= 40.9:
+            status = ' - Ожирение 3 степени'
+            color = '#e80b0d'
+        elif 41 <= masindex:
+            status = ' - Ожирение 4 степени'
+            color = '#c00000'
+    return [status, color]
+
+
 class Account(TemplateView):
     template_name = 'account.html'
 
@@ -365,6 +433,10 @@ class Account(TemplateView):
         our_user = Human.objects.filter(email=request.user.email)
         inbase = True
         a = list(our_user)
+        masindex = imt(request.user.email)
+        res = imtMSG(request.user.email, masindex)
+        masindex_result = res[0]
+        masindex_color = res[1]
         try:
             b = a[0]
         except IndexError:
@@ -372,6 +444,9 @@ class Account(TemplateView):
         ctx = {
             'our_user': our_user,
             'inbase': inbase,
+            'imt': masindex,
+            'imtres': masindex_result,
+            'imtcolr': masindex_color,
         }
         return render(request, self.template_name, ctx)
 

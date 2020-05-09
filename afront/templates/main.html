@@ -96,7 +96,12 @@
 
 {% block content %}
 {% if user.is_authenticated%}
-<h1>Главная страница </h1>
+<div class="media ">
+  <img  height="40" class=" ml-1 mt-2" src = "https://image.freepik.com/free-icon/_318-1861.jpg">
+    <div class="media-body mt-1">
+    <h1>Главная страница</h1>
+    </div>
+</div>
 <h4>Добро пожаловать на сайт, {{user.username}} </h4>
 {%else%}
 <h1>Стартовая страница  </h1>

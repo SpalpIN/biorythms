@@ -4,7 +4,7 @@ from django.db import models
 # Create your models here.
 
 class Human(models.Model):
-    # person = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
+    # person = models.ForeignKey(User,on_delete=models.CASCADE)
     name = models.CharField(max_length=50, verbose_name='Имя')
     surname = models.CharField(max_length=50, verbose_name='Фамилия')
     email = models.EmailField(max_length=50)
@@ -20,7 +20,7 @@ class Human(models.Model):
 
     def __str__(self):
         return '{} {}'.format(self.name, self.surname)
-    hronoType = models.CharField(max_length=30, default='Неопределен')
+    hronoType = models.CharField(max_length=30)
 
 
 class BiorythmsModel(models.Model):
