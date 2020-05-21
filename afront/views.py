@@ -246,7 +246,8 @@ class Biorhythms(TemplateView):
         model.intel = round((sin((2 * pi * days) / p['intel']) * 100), 2)
         model.birth_date = b1
         model.calculate_date = a1
-        model.save()
+        # model.save()
+        model.save(update_fields=['phys', 'mind', 'intel', 'birth_date', 'calculate_date'])
         ctx = {'phys': model.phys,
                'mind': model.mind,
                'intel': model.intel,
