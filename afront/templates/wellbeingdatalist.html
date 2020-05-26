@@ -1,0 +1,34 @@
+{% extends 'main.html' %}
+{% block title %} Список данных {% endblock %}
+
+{% block content %}
+
+<div class="container" style="margin-right: 100%; ">
+<table class="table table-hover" style="text-align:center">
+ <thead class="thead-dark">
+    <tr>
+        <td>Дата</td>
+        <td>Самочувствие</td>
+        <td>Давление</td>
+        <td>Управление</td>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+        {% for human in all_data%}
+        <td ><b>{{human.day}}</b></td>
+        <td>{{human.well_being }}</td>
+        <td>{{human.pressure}}</td>
+        <td ><form action="/wellbeing_datalist/" method="post"> {%csrf_token%} <button class="btn btn-outline-danger" type="submit" name="delete1" value="{{human.id}}">Удалить</button> </form>
+       <!-- <form style="margin-top:5px" action="/changeAccData/" method="get"> {%csrf_token%} <button type="submit" name="delete" value="{{human.id}}">Редактивировать</button> </form>
+-->     </td>
+
+    </tr>
+
+    {%endfor%}
+
+  </tbody>
+</table>
+</div>
+<br>
+{% endblock %}

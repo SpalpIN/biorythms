@@ -20,6 +20,7 @@ class Human(models.Model):
 
     def __str__(self):
         return '{} {}'.format(self.name, self.surname)
+
     hronoType = models.CharField(max_length=30)
 
 
@@ -30,3 +31,10 @@ class BiorythmsModel(models.Model):
     phys = models.FloatField(default=0)
     mind = models.FloatField(default=0)
     intel = models.FloatField(default=0)
+
+
+class AtmosphericPressure(models.Model):
+    person = models.ForeignKey(Human, on_delete=models.CASCADE)
+    well_being = models.CharField(max_length=10)
+    day = models.CharField(max_length=10)
+    pressure = models.PositiveSmallIntegerField()

@@ -17,9 +17,8 @@ urlpatterns = [
     re_path('bioresult/', views.Bioresult.as_view()),
     re_path('circad/', views.CircadeRythm.as_view()),
     re_path('hronoTest/', views.HronoTest.as_view()),
-
-
-
+    re_path('well-being/', views.WellBeing.as_view()),
+    re_path('wellbeing_datalist/', views.WellBeingDataList.as_view()),
 
 
 ]

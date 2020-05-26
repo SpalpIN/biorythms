@@ -6,3 +6,4 @@ from . import models
 #admin.site.register(models.Human, AuthorAdmin)
 admin.site.register(models.Human)
 admin.site.register(models.BiorythmsModel)
+admin.site.register(models.AtmosphericPressure)

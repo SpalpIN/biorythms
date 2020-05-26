@@ -6,9 +6,12 @@ from django.utils.datastructures import MultiValueDictKeyError
 from django.views.generic import TemplateView, FormView, UpdateView
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth import logout, login
-from .models import Human, BiorythmsModel
-from .forms import UserCreationForm, HumanForm, BiorythmsForm
+from .models import Human, BiorythmsModel, AtmosphericPressure
+from .forms import UserCreationForm, HumanForm, BiorythmsForm, AtmosphericPressureForm
+from django.contrib import messages
 
+from bs4 import BeautifulSoup
+import requests
 import datetime
 from math import sin, pi
 
@@ -425,6 +428,69 @@ def imtMSG(our_us, masindex):
             status = ' - Ожирение 4 степени'
             color = '#c00000'
     return [status, color]
+
+
+def parsing(raw_html):
+    res = 0
+    r = requests.get(raw_html)
+    soup = BeautifulSoup(r.content, 'html.parser')
+    for tag in soup.find_all("td", 'p5'):
+        try:
+            if int(tag.text) > 641:
+                res = tag.text
+        except ValueError:
+            pass
+    return res
+
+
+class WellBeing(TemplateView):
+    template_name = 'well-being.html'
+
+    def get(self, request):
+        form = AtmosphericPressureForm
+        ctx = {'form': form}
+        return render(request, self.template_name, ctx)
+
+    def post(self, request):
+        form = AtmosphericPressureForm(request.POST)
+        well_being = request.POST['well-being']
+        today = datetime.date.today().strftime("%Y-%m-%d")
+        day = request.POST['day']
+        if day > today:
+            messages.error(request,"Введите верную дату")
+            return redirect(self.template_name)
+        city = request.POST['city']
+        pressure = parsing('https://sinoptik.ua/погода-{}/{}'.format(city, day))
+        try:
+            peid = Human.objects.get(email=request.user.email).id
+            mod = AtmosphericPressure(well_being=well_being, person_id=peid, day=day, pressure=pressure)
+            mod.save()
+        except ObjectDoesNotExist:
+            er = 'Для использования данной функции необходимо внести персональные данные в личном кабинете, '
+            ctx = {'er': er}
+            return render(request, 'well-being.html', ctx)
+        except IntegrityError:
+            pass
+        # model = AtmosphericPressure.objects.get(person=peid)
+        messages.success(request, 'Данные за {} успешно добавлены, город - {}, атмосферное давление - {}'.format(day, city, pressure))
+        return redirect(self.template_name)
+
+
+class WellBeingDataList(TemplateView):
+    template_name = 'wellbeingdatalist.html'
+
+    def get(self, request):
+        if request.user.is_authenticated:
+            all_data = AtmosphericPressure.objects.filter(person_id=Human.objects.get(email=request.user.email).id).order_by('day')
+            ctx = {'all_data': all_data}
+            return render(request, self.template_name, ctx)
+        else:
+            return render(request, self.template_name, {})
+
+    def post(self, request):
+        col = request.POST['delete1']
+        AtmosphericPressure.objects.filter(id=col).delete()
+        return redirect(self.template_name)
 
 
 class Account(TemplateView):

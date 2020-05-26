@@ -1,0 +1,88 @@
+{% extends 'main.html' %}
+{% block title %} Самочувствие {% endblock %}
+
+{% block content %}
+
+<h1>{{user.username}} </h1>
+{%if er%}
+<h2>{{er}}<a href="/account">перейти</a></h2>
+{%else%}
+
+
+<form id="WellBeingForm" action ='/well-being/' method="post" >
+    {%csrf_token%}
+
+    <div class="form-row" style="margin:10px">
+      <div class="col-md-2 mb-3">
+        <label for="id_well_being" style="margin-left: 5px">Самочувствие</label>
+         <select name="well-being" class="form-control"  id="id_well_being">
+              <option value="Хорошо" selected>Хорошо</option>
+              <option value="Нормально">Нормально</option>
+              <option value="Плохо">Плохо</option>
+            </select>
+      </div>
+
+      <div class="col-md-2 mb-3">
+        <label for="id_day" style="margin-left: 5px">Дата</label>
+        <input type="date" class="form-control"  name="day" maxlength="10"  id="id_day"  required value="{{today}}">
+      </div>
+
+
+      <div class="col-md-2 mb-3">
+        <label for="city" style="margin-left: 5px">Город</label>
+         <select name="city" class="form-control"  id="city">
+              <option value="Харьков" selected>Харьков</option>
+              <option value="Киев">Киев</option>
+              <option value="Одеса">Одеса</option>
+              <option value="Днепр">Днепр</option>
+              <option value="Запорожье">Запорожье</option>
+              <option value="Львов">Львов</option>
+              <option value="Кривой Рог">Кривой Рог</option>
+              <option value="Николаев">Николаев</option>
+              <option value="Мариуполь">Мариуполь</option>
+              <option value="Винница">Винница</option>
+              <option value="Полтава">Полтава</option>
+              <option value="Чернигов">Чернигов</option>
+              <option value="Черкассы">Черкассы</option>
+              <option value="Хмельницкий">Хмельницкий</option>
+              <option value="Черновцы">Черновцы</option>
+              <option value="Житомир">Житомир</option>
+              <option value="Сумы">Сумы</option>
+              <option value="Ровно">Ровно</option>
+              <option value="Горловка">Горловка</option>
+              <option value="Ивано-Франковск">Ивано-Франковск</option>
+              <option value="Каменское">Каменское</option>
+              <option value="Кропивницкий">Кропивницкий</option>
+              <option value="Тернополь">Тернополь</option>
+              <option value="Кременчуг">Кременчуг</option>
+              <option value="Луцк">Луцк</option>
+              <option value="Белая-Церковь">Белая-Церковь</option>
+              <option value="Краматорск">Краматорск</option>
+              <option value="Мелитополь">Мелитополь</option>
+              <option value="Ужгород">Ужгород</option>
+              <option value="Никополь">Никополь</option>
+              <option value="Бердянск">Бердянск</option>
+              <option value="Бровары">Бровары</option>
+              <option value="Павлоград">Павлоград</option>
+            </select>
+      </div>
+
+ <button class="btn btn-outline-secondary"  style="margin:32px" type="submit" name="count" >Добавить данные</button>
+
+ <a href=" /wellbeing_datalist" role="button" class="btn btn-outline-secondary ml-0"  style="margin:32px" type="submit" >Посмотреть список данных</a>
+    </div>
+
+</form>
+
+{% if messages %}
+    <ul class="messages">
+    {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>
+            {{ message }}
+        </li>
+    {% endfor %}
+    </ul>
+{% endif %}
+
+{%endif%}
+{% endblock %}
