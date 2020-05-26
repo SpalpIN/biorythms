@@ -471,6 +471,7 @@ class WellBeing(TemplateView):
             return render(request, 'well-being.html', ctx)
         except IntegrityError:
             pass
+
         # model = AtmosphericPressure.objects.get(person=peid)
         messages.success(request, 'Данные за {} успешно добавлены, город - {}, атмосферное давление - {}'.format(day, city, pressure))
         return redirect(self.template_name)
